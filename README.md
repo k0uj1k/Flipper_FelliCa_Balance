@@ -14,17 +14,30 @@ An application (.fap) for Flipper Zero that reads and displays the balance of Ja
 - **Smart Card Identification**: Displays the name of the recognized card type. If a FeliCa card is successfully read but does not contain recognized balance services, it clearly displays "No balance info".
 - **One-Touch Scan Reset**: Press the **OK** button to reset the scanning state and scan another card.
 
-## Build Requirements
-This application requires the Flipper Build Tool (`ufbt`). 
+## Build Requirements & Setup
 
-If you have `uv` (a fast Python package installer and resolver) installed, you can build without any manual setup.
+This application requires the Flipper Build Tool (`ufbt`) and Python's `uv` package manager.
+
+To automatically initialize the Python environment, configure local virtual environments, install `ufbt`, and download the Flipper Zero SDK toolchain, run the provided setup script:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+This setup script will:
+1. Verify if `uv` is installed.
+2. Initialize a Python project using `uv init` if not already present.
+3. Add `ufbt` as a local development dependency.
+4. Run `ufbt update` to download the Flipper Zero SDK.
+5. Compile the FAP binary to verify the setup.
 
 ## Building the App
 
-To compile the application to a `.fap` package:
+Once setup is complete, you can compile the application to a `.fap` package at any time:
 
 ```bash
-uvx ufbt faps
+uv run ufbt faps
 ```
 
 The compiled application will be generated as `dist/felica_balance.fap`.
@@ -34,7 +47,7 @@ The compiled application will be generated as `dist/felica_balance.fap`.
 With your Flipper Zero connected via USB, run the following command to build, flash, and launch the application automatically:
 
 ```bash
-uvx ufbt launch
+uv run ufbt launch
 ```
 
 If you prefer to install it manually, copy the compiled `dist/felica_balance.fap` file to your Flipper Zero's SD card directory `/apps/NFC/`.
@@ -52,3 +65,4 @@ If you prefer to install it manually, copy the compiled `dist/felica_balance.fap
 - `felica_balance.c`: Main source code containing UI drawing, NFC polling worker thread, direct FeliCa block reader, and currency parser.
 - `application.fam`: FAP manifest file describing metadata, category (`NFC`), stack size, and icon.
 - `felica_balance.png`: 10x10 pixel 1-bit menu icon representing a contactless card.
+- `setup.sh`: Automated environment setup script.
