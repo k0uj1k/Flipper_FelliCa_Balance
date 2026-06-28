@@ -3,8 +3,21 @@ __pycache__/
 *.py[oc]
 build/
 dist/
+target/
 wheels/
 *.egg-info
 
 # Virtual environments
-.venv
+.venv/
+
+# Flipper Zero / ufbt build outputs
+*.fap
+.ufbt/
+.fbt.targets
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
